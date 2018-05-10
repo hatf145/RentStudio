@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/container_wide_padding"
+        tools:context="iteso.com.rentstudio.Activity_Register_User">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin"
+            android:text="@string/not_not"
+            android:textColor="@color/trueBlack"
+            android:textSize="@dimen/large_textSize"
+            android:textStyle="bold" />
+
+        <Switch
+            android:id="@+id/activity_notificationsAll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:text="@string/not_all"
+            android:gravity="center_vertical|left"
+            android:textSize="@dimen/large_textSize"
+            />
+
+        <Switch
+            android:id="@+id/activity_notificationsPayment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:text="@string/not_payment"
+            android:gravity="center_vertical|left"
+            android:textSize="@dimen/large_textSize"
+            />
+        <Switch
+            android:id="@+id/activity_notificationsRenew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:text="@string/not_renew"
+            android:gravity="center_vertical|left"
+            android:textSize="@dimen/large_textSize"
+            />
+
+        <Switch
+            android:id="@+id/activity_notificationsSound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:gravity="center_vertical|left"
+            android:text="@string/not_sound"
+            android:textSize="@dimen/large_textSize" />
+
+    </LinearLayout>
+</ScrollView>

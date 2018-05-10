@@ -1,0 +1,88 @@
+<resources>
+    <!--Nombrar los Strings por su traducción al inglés-->
+    <string name="app_name">RentStudio</string>
+    <string name="log_in">Iniciar Sesión</string>
+    <string name="sign_up">Registrarse</string>
+    <string name="register">Registro</string>
+    <string name="register_property">Registro Propiedad</string>
+    <string name="sign_in">Registrar</string>
+    <string name="user">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="name">Nombre(s)</string>
+    <string name="lastname">Apellido(s)</string>
+    <string name="email">E-Mail</string>
+    <string name="phone">Celular</string>
+    <string name="direction">Dirección</string>
+    <string name="town">Municipio</string>
+    <string name="state">Estado</string>
+    <string name="lessor_registry">Registro Arrendador</string>
+    <string name="search">Buscador</string>
+    <string name="name1">Nombre</string>
+    <string name="rent">Renta</string>
+    <string name="available">Disponible</string>
+    <string name="navailable">No disponible</string>
+    <string name="register_rent">Registrar Renta</string>
+    <string name="payment_paypal">Paypal</string>
+    <string name="payment_card">Tarjeta de débito o crédito</string>
+    <string name="card_number_title">Numero de tarjeta</string>
+    <string name="card_expiration_title">Fecha de vencimiento</string>
+    <string name="card_cvc_title">CVC</string>
+    <string name="card_number_hint">1111 1111 1111 1111</string>
+    <string name="card_expiration_hint">01/25</string>
+    <string name="card_cvc_hint">123</string>
+    <string name="log_out">Log Out</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="settings_notification">Notificaciones</string>
+    <string name="settings_payment">Métodos de pago</string>
+    <string name="settings_help">Ayuda</string>
+    <string name="settings_eula">Términos de uso</string>
+    <string name="settings_logout">Cerrar sesión</string>
+
+
+    <string name="not_not">Notificaciones</string>
+    <string name="not_all">Activar todas</string>
+    <string name="not_payment">Vencimiento pagos</string>
+    <string name="not_renew">Renovación de contrato</string>
+    <string name="not_sound">Sonido</string>
+    <string name="edit_user">Editar Perfil</string>
+    <string name="save">Guardar</string>
+
+
+    <string name="properties">Propiedades</string>
+    <string name="home">Home</string>
+    <string name="lessors">Arrendadores</string>
+    <string name="edit_profile">Editar Perfil</string>
+    <string name="settings">Ajustes</string>
+
+
+    <string-array name="properties">
+        <item>Propiedad</item>
+        <item>Propiedad A</item>
+        <item>Propiedad B</item>
+        <item>Propiedad C</item>
+    </string-array>
+
+    <string-array name="available">
+        <item>Disponible</item>
+        <item>No disponible</item>
+    </string-array>
+    <string name="title_activity_side_menu_ex">SideMenuEx</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string name="lessor">Arredador</string>
+    <string name="lesse">Arredatario</string>
+    <string name="editRent">Editar Renta</string>
+    <string name="editProperty">Editar Propiedad</string>
+    <string name="editLessor">Editar Arrendador</string>
+
+
+
+</resources>

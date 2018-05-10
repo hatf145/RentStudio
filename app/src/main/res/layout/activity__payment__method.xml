@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="iteso.com.rentstudio.Activity_Payment_Method"
+    android:layout_margin="@dimen/margin">
+
+
+  
+    <TextView
+        android:id="@+id/card_payment_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/payment_card"
+        android:textSize="@dimen/large_text_button"
+        android:gravity="center"
+        android:padding="@dimen/large_text_button"
+        android:clickable="true"
+
+        />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#c0c0c0"/>
+    
+    <TextView
+        android:id="@+id/paypal_payment_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/payment_paypal"
+        android:gravity="center"
+        android:textSize="@dimen/large_text_button"
+        android:padding="@dimen/large_text_button"
+        android:clickable="true"
+        />
+
+</LinearLayout>
+
+   

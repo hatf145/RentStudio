@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/container_wide_padding"
+    android:paddingTop="@dimen/container_wide_padding"
+    tools:context="iteso.com.rentstudio.Activity_LogIn">
+
+    <ImageView
+        android:id="@+id/activity_login_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:src="@drawable/logo"
+        android:layout_margin="@dimen/margin"
+        android:scaleType="centerInside"
+        android:layout_gravity="center_horizontal"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/margin">
+            <EditText
+                android:id="@+id/activity_login_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/user"
+                android:layout_gravity="center_horizontal"
+                android:inputType="textPersonName"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/margin">
+
+            <EditText
+                android:id="@+id/activity_login_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:layout_margin="@dimen/margin"
+                android:layout_gravity="center_horizontal"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+        <Button
+            android:id="@+id/activity_login_loginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/log_in"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:textColor="@color/notReallyWhite"
+            android:textSize="@dimen/large_button_textSize"
+            android:background="@drawable/button_ripple_effect"
+            android:paddingHorizontal="@dimen/node_padding"
+            android:layout_margin="@dimen/margin"
+            android:layout_gravity="center_horizontal"
+            android:onClick="onClick"/>
+        <Button
+            android:id="@+id/activity_login_registerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:textColor="@color/notReallyWhite"
+            android:textSize="@dimen/regular_button_textSize"
+            android:background="@drawable/button_ripple_effect"
+            android:paddingHorizontal="@dimen/node_padding"
+            android:layout_margin="@dimen/margin"
+            android:layout_gravity="center_horizontal"
+            android:onClick="onClick"/>
+
+</LinearLayout>

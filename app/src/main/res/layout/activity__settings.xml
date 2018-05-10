@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity_Settings">
+
+    <TextView
+
+        android:id="@+id/activity_settings_not"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="@dimen/large_text_button"
+        android:text="@string/settings_notification"
+
+        android:textSize="@dimen/large_text_button" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#c0c0c0"/>
+
+    <TextView
+        android:id="@+id/activity_settings_payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/large_text_button"
+        android:text="@string/settings_payment"
+
+        android:textSize="@dimen/large_text_button"
+        android:onClick="onClick"
+        />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#c0c0c0"/>
+
+    <TextView
+        android:id="@+id/activity_settings_help"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/large_text_button"
+        android:text="@string/settings_help"
+        android:textSize="@dimen/large_text_button"
+        android:onClick="onClick"
+        />
+
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#c0c0c0"/>
+
+    <TextView
+
+        android:id="@+id/activity_settings_eula"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="@dimen/large_text_button"
+        android:text="@string/settings_eula"
+        android:textSize="@dimen/large_text_button"
+        android:onClick="onClick"
+        />
+
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#c0c0c0"/>
+
+    <TextView
+
+        android:id="@+id/activity_settings_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="@dimen/large_text_button"
+        android:text="@string/settings_logout"
+        android:textSize="@dimen/large_text_button"
+        android:onClick="onClick"
+        />
+</LinearLayout>

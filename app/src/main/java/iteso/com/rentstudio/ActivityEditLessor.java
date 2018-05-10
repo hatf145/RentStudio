@@ -84,6 +84,7 @@ public class ActivityEditLessor extends AppCompatActivity {
                 });
 
                 Intent backHome = new Intent(ActivityEditLessor.this, Activity_Main_Screen.class);
+                backHome.setFlags(backHome.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(backHome);
                 finish();
             }

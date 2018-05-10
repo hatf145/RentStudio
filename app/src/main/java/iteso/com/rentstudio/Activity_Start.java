@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -13,17 +15,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Activity_Start extends AppCompatActivity {
-ImageView icon;
-TextView rent;
+    ImageView icon;
+    TextView rent;
+    FirebaseAuth mAuth;
+    FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         icon=findViewById(R.id.activity_start_logo);
         rent=findViewById(R.id.activity_start_title);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.keepSynced(true);
         TimerTask task=new TimerTask() {
             @Override
             public void run() {

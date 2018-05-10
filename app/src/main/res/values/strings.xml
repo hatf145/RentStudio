@@ -77,8 +77,8 @@
     <string name="action_settings">Settings</string>
 
 
-    <string name="lessor">Arredador</string>
-    <string name="lesse">Arredatario</string>
+    <string name="lessor">Arrendador</string>
+    <string name="lesse">Arrendatario</string>
     <string name="editRent">Editar Renta</string>
     <string name="editProperty">Editar Propiedad</string>
     <string name="editLessor">Editar Arrendador</string>

@@ -64,8 +64,28 @@
                 android:layout_gravity="center_vertical"
                 />
         </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
         <Button
+            android:layout_weight=".5"
+            android:id="@+id/eliminarLessor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/deleteLessor"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:textColor="@color/notReallyWhite"
+            android:textSize="@dimen/regular_button_textSize"
+            android:background="@drawable/button_ripple_effect"
+            android:paddingHorizontal="@dimen/node_padding"
+            android:layout_margin="@dimen/margin"
+            android:layout_gravity="center_horizontal"
+            android:onClick="onClick"/>
+        <Button
+            android:layout_weight=".5"
             android:id="@+id/lbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,5 +100,7 @@
             android:layout_gravity="center_horizontal"
             android:onClick="onClick"/>
     </LinearLayout>
+    </LinearLayout>
+
 </ScrollView>
 

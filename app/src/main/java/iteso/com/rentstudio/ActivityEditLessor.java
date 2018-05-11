@@ -66,13 +66,7 @@ public class ActivityEditLessor extends AppCompatActivity {
 
                             }
                         }
-                        for(DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()) {
-                            Property aux = snapshot.getValue(Property.class);
-                            if(aux.getLessor().equals(name) && i == 1){
-                                databaseReference.child("properties").child(snapshot.getKey()).child("lessor").setValue(etName.getText().toString());
 
-                            }
-                        }
                         i=0;
                     }
 

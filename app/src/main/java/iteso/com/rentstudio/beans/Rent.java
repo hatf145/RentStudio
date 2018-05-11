@@ -10,25 +10,70 @@ import java.util.Date;
  */
 
 public class Rent implements Parcelable {
-    private String property;
+    private String address;
     private String lessor;
     private String date;
+    private String phone;
+    private Integer cost;
+    private String mail;
 
-    public Rent(){
-    }
 
-    public Rent(String property, String lessor, String date) {
-        this.property = property;
+
+    public Rent(String address, String lessor, String date, String phone, Integer cost, String mail) {
+        this.address = address;
         this.lessor = lessor;
         this.date = date;
+        this.phone = phone;
+        this.cost = cost;
+        this.mail = mail;
     }
 
-    public String getProperty() {
-        return property;
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setProperty(String property) {
-        this.property = property;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.address);
+        dest.writeString(this.lessor);
+        dest.writeString(this.date);
+        dest.writeString(this.phone);
+        dest.writeValue(this.cost);
+        dest.writeString(this.mail);
+    }
+
+    public Rent() {
+    }
+
+    protected Rent(Parcel in) {
+        this.address = in.readString();
+        this.lessor = in.readString();
+        this.date = in.readString();
+        this.phone = in.readString();
+        this.cost = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.mail = in.readString();
+    }
+
+    public static final Creator<Rent> CREATOR = new Creator<Rent>() {
+        @Override
+        public Rent createFromParcel(Parcel source) {
+            return new Rent(source);
+        }
+
+        @Override
+        public Rent[] newArray(int size) {
+            return new Rent[size];
+        }
+    };
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getLessor() {
@@ -47,34 +92,31 @@ public class Rent implements Parcelable {
         this.date = date;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getPhone() {
+        return phone;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.property);
-        dest.writeString(this.lessor);
-        dest.writeString(this.date);
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    protected Rent(Parcel in) {
-        this.property = in.readString();
-        this.lessor = in.readString();
-        this.date = in.readString();
+    public Integer getCost() {
+        return cost;
     }
 
-    public static final Creator<Rent> CREATOR = new Creator<Rent>() {
-        @Override
-        public Rent createFromParcel(Parcel source) {
-            return new Rent(source);
-        }
+    public void setCost(Integer cost) {
+        this.cost = cost;
+    }
 
-        @Override
-        public Rent[] newArray(int size) {
-            return new Rent[size];
-        }
-    };
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public static Creator<Rent> getCREATOR() {
+        return CREATOR;
+    }
 }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +30,11 @@ public class ActivityPropertyScreen extends AppCompatActivity {
     public TextView state;
     public TextView town;
     Property property;
-    Button editar;
+    Button editar, eliminar;
+
+    private DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
+    String name1;
 
 
     @Override
@@ -45,10 +50,13 @@ public class ActivityPropertyScreen extends AppCompatActivity {
         state = findViewById(R.id.property_state);
         town = findViewById(R.id.property_town);
         editar=findViewById(R.id.activity_property_screen_button);
+        eliminar=findViewById(R.id.eliminarPropiedad);
+
 
 
         if(getIntent().getExtras()!=null){
             property = getIntent().getParcelableExtra("ITEM");
+            name1=property.getName();
             if (property != null) {
                 address.setText("Dirección: "+property.getAddress());
                 cost.setText("Renta: "+Integer.toString(property.getCost()));
@@ -70,6 +78,39 @@ public class ActivityPropertyScreen extends AppCompatActivity {
                 Intent intent3=new Intent(ActivityPropertyScreen.this,ActivityEditProperty.class);
                 intent3.putExtra("ITEM",property);
                 startActivityForResult(intent3,9999);
+            }
+        });
+
+        mAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid());
+        eliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                databaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for(DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()) {
+                            Property aux = snapshot.getValue(Property.class);
+                            if(aux.getName().equals(name1) ){
+                                databaseReference.child("properties").child(snapshot.getKey()).removeValue();
+
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                Intent backHome = new Intent(ActivityPropertyScreen.this, Activity_Main_Screen.class);
+                backHome.setFlags(backHome.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(backHome);
+                finish();
+
             }
         });
 

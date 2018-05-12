@@ -21,6 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import iteso.com.rentstudio.beans.Lessor;
 import iteso.com.rentstudio.beans.Property;
 import iteso.com.rentstudio.beans.Rent;
 
@@ -41,19 +42,24 @@ public class Fragment_Main extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid());
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 myDataSet.clear();
-                for(DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()){
+                for(DataSnapshot snapshot : dataSnapshot.child(mAuth.getCurrentUser().getUid()).child("properties").getChildren()){
                     Property aux = snapshot.getValue(Property.class);
-                    if(!aux.getLessor().equals("lessor_1")) {
-                        Rent auxRent = new Rent(aux.getName(), aux.getLessor(), myDate(aux.getPayday()));
-                        myDataSet.add(auxRent);
-                        mAdapter.notifyDataSetChanged();
+                    if(aux.getLessor()!="lessor_1") {
+                        for(DataSnapshot snapshot2 : dataSnapshot.child(mAuth.getCurrentUser().getUid()).child("lessors").getChildren()){
+                            Lessor aux2 = snapshot2.getValue(Lessor.class);
+                            if(aux2.getName().equals(aux.getLessor())) {
+                                Rent auxRent = new Rent(aux.getAddress(), aux.getLessor(), myDate(aux.getPayday()),aux2.getPhone(),aux.getCost(),aux2.getEmail());
+                                myDataSet.add(auxRent);
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        }
                     }
                 }
             }
@@ -71,7 +77,7 @@ public class Fragment_Main extends android.support.v4.app.Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new Adapter_Rent_Card(getActivity(), myDataSet);
+        mAdapter = new Adapter_Rent_Card(1,getActivity(), myDataSet);
         recyclerView.setAdapter(mAdapter);
 
         return view;
@@ -108,8 +114,9 @@ public class Fragment_Main extends android.support.v4.app.Fragment {
                 return day + " / Noviembre";
             case 12:
                 return day + " / Diciembe";
-                default:
-                    return day + " / Enero";
+            default:
+                return day + " / Enero";
         }
     }
+
 }

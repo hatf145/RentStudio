@@ -65,9 +65,6 @@ public class ActivityEditProperty extends AppCompatActivity {
                                 databaseReference.child("properties").child(snapshot.getKey()).child("address").setValue(address.getText().toString());
                                 databaseReference.child("properties").child(snapshot.getKey()).child("town").setValue(town.getText().toString());
                                 databaseReference.child("properties").child(snapshot.getKey()).child("state").setValue(state.getText().toString());
-                             ////////////////////////
-                                // databaseReference.child("properties").child(snapshot.getKey()).child("cost").setValue(rent.getText().toString());
-
                             }
                         }
 

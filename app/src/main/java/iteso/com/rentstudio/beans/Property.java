@@ -12,6 +12,7 @@ public class Property implements Parcelable {
     private Integer payday;
     private String state;
     private String town;
+    private String userID;
 
 
     public Property(){
@@ -26,6 +27,17 @@ public class Property implements Parcelable {
         this.payday = payday;
         this.state = state;
         this.town = town;
+    }
+
+    public Property(String address, Integer cost, String lessor, String name, Integer payday, String state, String town, String userID) {
+        this.address = address;
+        this.cost = cost;
+        this.lessor = lessor;
+        this.name = name;
+        this.payday = payday;
+        this.state = state;
+        this.town = town;
+        this.userID = userID;
     }
 
     public String getAddress() {
@@ -84,6 +96,14 @@ public class Property implements Parcelable {
         this.town = town;
     }
 
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
 
     @Override
     public int describeContents() {
@@ -99,6 +119,7 @@ public class Property implements Parcelable {
         dest.writeValue(this.payday);
         dest.writeString(this.state);
         dest.writeString(this.town);
+        dest.writeString(this.userID);
     }
 
     protected Property(Parcel in) {
@@ -109,6 +130,7 @@ public class Property implements Parcelable {
         this.payday = (Integer) in.readValue(Integer.class.getClassLoader());
         this.state = in.readString();
         this.town = in.readString();
+        this.userID = in.readString();
     }
 
     public static final Creator<Property> CREATOR = new Creator<Property>() {

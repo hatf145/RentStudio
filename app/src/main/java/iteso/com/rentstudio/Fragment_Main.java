@@ -29,10 +29,11 @@ import iteso.com.rentstudio.beans.Rent;
 public class Fragment_Main extends android.support.v4.app.Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    ArrayList<Rent> myDataSet = new ArrayList<>();
+    private ArrayList<Rent> myDataSet = new ArrayList<>();
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
     private GregorianCalendar calendar = new GregorianCalendar();
+    private int userType;
 
     public Fragment_Main(){
 
@@ -41,6 +42,9 @@ public class Fragment_Main extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        userType = getArguments().getInt("userType");
+        System.out.println("onFragment: " + userType);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();

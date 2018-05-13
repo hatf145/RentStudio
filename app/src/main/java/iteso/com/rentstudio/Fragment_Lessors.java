@@ -23,9 +23,10 @@ import iteso.com.rentstudio.beans.Lessor;
 public class Fragment_Lessors extends android.support.v4.app.Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    ArrayList<Lessor> myDataSet = new ArrayList<>();
-    DatabaseReference databaseReference;
-    FirebaseAuth mAuth;
+    private ArrayList<Lessor> myDataSet = new ArrayList<>();
+    private DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
+    private int userType;
 
     public Fragment_Lessors(){
 
@@ -34,6 +35,9 @@ public class Fragment_Lessors extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        userType = getArguments().getInt("userType");
+        System.out.println("onFragment: " + userType);
 
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid()).child("lessors");

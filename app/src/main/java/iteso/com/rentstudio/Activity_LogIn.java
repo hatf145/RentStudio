@@ -14,26 +14,55 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Activity_LogIn extends AppCompatActivity implements View.OnClickListener{
     private EditText etUserName, etPassword;
     private static final String TAG = "EmailPassword";
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
+    private int userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__log_in);
 
+        userType = getIntent().getIntExtra("userType", 0);
+        System.out.println("onGetExtrasLOGIN: " + userType);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null)
+            getType();
+        System.out.println("onCreate: " + userType);
+
         etUserName = findViewById(R.id.activity_login_username);
         etPassword = findViewById(R.id.activity_login_password);
+    }
 
-        mAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+    public void getType(){
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid()).child("info");
 
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userType = (int) dataSnapshot.child("type").getValue(Integer.class);
+                System.out.println("onListener: " + userType);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -62,9 +91,17 @@ public class Activity_LogIn extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+                            getType();
                             Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            final FirebaseUser user = mAuth.getCurrentUser();
+                            TimerTask tTask = new TimerTask() {
+                                @Override
+                                public void run() {
+                                    updateUI(user);
+                                }
+                            };
+                            Timer timer = new Timer();
+                            timer.schedule(tTask,1000);
                         } else {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             etUserName.setText("");
@@ -76,8 +113,6 @@ public class Activity_LogIn extends AppCompatActivity implements View.OnClickLis
                     }
                 });
     }
-
-
 
     private boolean validateForm() {
         boolean valid = true;
@@ -113,6 +148,8 @@ public class Activity_LogIn extends AppCompatActivity implements View.OnClickLis
             Intent loginIntent = new Intent(Activity_LogIn.this,
                     Activity_Main_Screen.class);
             loginIntent.setFlags(loginIntent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            System.out.println("onPutExtrasLOGIN: " + userType);
+            loginIntent.putExtra("userType", userType);
             startActivity(loginIntent);
         } else {
 

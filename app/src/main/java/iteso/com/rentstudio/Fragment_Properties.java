@@ -22,9 +22,10 @@ import iteso.com.rentstudio.beans.Property;
 public class Fragment_Properties extends android.support.v4.app.Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    ArrayList<Property> myDataSet = new ArrayList<>();
-    DatabaseReference databaseReference;
-    FirebaseAuth mAuth;
+    private ArrayList<Property> myDataSet = new ArrayList<>();
+    private DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
+    private int userType;
 
     public Fragment_Properties(){
     }
@@ -33,26 +34,16 @@ public class Fragment_Properties extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        userType = getArguments().getInt("userType");
+        System.out.println("onFragment: " + userType);
+
         mAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid()).child("properties");
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                myDataSet.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-
-                    Property aux = snapshot.getValue(Property.class);
-                    myDataSet.add(aux);
-                    mAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        if(userType == 0){
+            fillArrendatario();
+        } else {
+            fillArrendador();
+        }
 
         View view = inflater.inflate(R.layout.fragment_main_screen, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.fragment_main_recycler_view);
@@ -66,8 +57,36 @@ public class Fragment_Properties extends android.support.v4.app.Fragment {
 
         return view;
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    public void fillArrendador(){
+        fillArrendatario();
+    }
+
+    public void fillArrendatario(){
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid()).child("properties");
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                myDataSet.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Property aux = snapshot.getValue(Property.class);
+                    myDataSet.add(aux);
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 }
+

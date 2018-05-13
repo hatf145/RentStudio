@@ -12,13 +12,11 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class Activity_Main_Screen extends AppCompatActivity {
 
@@ -27,13 +25,19 @@ public class Activity_Main_Screen extends AppCompatActivity {
     public Fragment_Main fragment_main;
     public Fragment_Lessors fragment_lessors;
     public Fragment_Properties fragment_properties;
-    TextView mEditProfile, mSettings, mAddProperty, mAddLessor, mAddRent, mLogout;
-    FirebaseAuth mAuth;
+    private TextView mEditProfile, mSettings, mAddProperty, mAddLessor, mAddRent, mLogout;
+    private FirebaseAuth mAuth;
+    private int userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__main__screen);
+
+        userType = getIntent().getIntExtra("userType", 0);
+        System.out.println("onGetExtraMAIN: " + userType);
+
+        mAuth = FirebaseAuth.getInstance();
 
         mEditProfile = findViewById(R.id.drawer_edit_profile);
         mSettings = findViewById(R.id.drawer_settings);
@@ -43,8 +47,6 @@ public class Activity_Main_Screen extends AppCompatActivity {
         mLogout = findViewById(R.id.drawer_log_out);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-
-        mAuth = FirebaseAuth.getInstance();
 
         setSupportActionBar(toolbar);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -86,6 +88,7 @@ public class Activity_Main_Screen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Activity_Register_Property.class);
+                intent.putExtra("userType", userType);
                 startActivity(intent);
             }
         });
@@ -94,6 +97,7 @@ public class Activity_Main_Screen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Activity_Register_Lessor.class);
+                intent.putExtra("userType", userType);
                 startActivity(intent);
             }
         });
@@ -102,13 +106,11 @@ public class Activity_Main_Screen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Activity_Register_Rent.class);
+                intent.putExtra("userType", userType);
                 startActivity(intent);
             }
         });
     }
-
-
-
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -118,20 +120,28 @@ public class Activity_Main_Screen extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+            Bundle args = new Bundle();
+            args.putInt("userType", userType);
             switch (position) {
                 case 0:
                     if(fragment_properties == null){
-                        return new Fragment_Properties();
+                        fragment_properties = new Fragment_Properties();
+                        fragment_properties.setArguments(args);
+                        return fragment_properties;
                     }
                     return fragment_properties;
                 case 1:
                     if(fragment_main == null){
-                        return new Fragment_Main();
+                        fragment_main = new Fragment_Main();
+                        fragment_main.setArguments(args);
+                        return fragment_main;
                     }
                     return fragment_main;
                 case 2:
                     if(fragment_lessors == null){
-                        return new Fragment_Lessors();
+                        fragment_lessors = new Fragment_Lessors();
+                        fragment_lessors.setArguments(args);
+                        return fragment_lessors;
                     }
                     return fragment_lessors;
                 default:
@@ -150,7 +160,11 @@ public class Activity_Main_Screen extends AppCompatActivity {
             switch (position){
                 case 0: return "Propiedades";
                 case 1: return "Home";
-                case 2: return "Arrendadores";
+                case 2:
+                    if(userType == 0) {
+                        return "Arrendadores";
+                    }
+                    return "Arrendatarios";
             }
             return null;
         }

@@ -17,17 +17,21 @@ import com.google.firebase.database.ValueEventListener;
 import iteso.com.rentstudio.beans.Property;
 
 public class Activity_Register_Property extends AppCompatActivity {
-    EditText etName, etDirection, etTown, etState, etRent;
-    String sName, sDirection, sTown, sState, sRent;
-    int iRent;
-    Button btnProperty;
-    DatabaseReference databaseReference;
-    FirebaseAuth mAuth;
+    private EditText etName, etDirection, etTown, etState, etRent;
+    private String sName, sDirection, sTown, sState, sRent;
+    private int iRent;
+    private Button btnProperty;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
+    private int userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__register__property);
+
+        userType = getIntent().getIntExtra("userType", 0);
+
         etName =findViewById(R.id.activity_registerProperty_name);
         etDirection =findViewById(R.id.activity_registerProperty_direction);
         etTown =findViewById(R.id.activity_registerProperty_town);

@@ -15,16 +15,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import iteso.com.rentstudio.beans.Lessor;
 
 public class Activity_Register_Lessor extends AppCompatActivity {
-    EditText etName, etLastname, etEmail, etPhone;
-    String sName, sLastName, sEmail, sPhone;
-    Button btnRegisterLessor;
-    DatabaseReference databaseReference;
-    FirebaseAuth mAuth;
+    private EditText etName, etLastname, etEmail, etPhone;
+    private String sName, sLastName, sEmail, sPhone;
+    private Button btnRegisterLessor;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
+    private int usertType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__register__lessor);
+
+        usertType = getIntent().getIntExtra("userType", 0);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();

@@ -25,20 +25,21 @@ import iteso.com.rentstudio.beans.Lessor;
 import iteso.com.rentstudio.beans.Property;
 
 public class Activity_Register_Rent extends AppCompatActivity {
-    Spinner lessor, property;
-    Calendar calendar;
-    TextView date;
-    int year, month, day, i;
-    Button btnRent;
-    ArrayList<String> lNames, pNames;
-
-    DatabaseReference databaseReference;
-    FirebaseAuth mAuth;
+    private Spinner lessor, property;
+    private Calendar calendar;
+    private TextView date;
+    private int year, month, day, i, userType;
+    private Button btnRent;
+    private ArrayList<String> lNames, pNames;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__register_rent);
+
+        userType = getIntent().getIntExtra("userType", 0);
 
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid());

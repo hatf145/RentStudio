@@ -84,7 +84,7 @@ public class Activity_Register_Rent extends AppCompatActivity {
         day = calendar.get(Calendar.DAY_OF_MONTH);
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
-        date.setText(day + "/" + month + "/" + year);
+        date.setText(day+  "/" + (month+1) + "/" + year);
 
         date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +92,8 @@ public class Activity_Register_Rent extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(Activity_Register_Rent.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int iyear, int iday, int imonth) {
-                        date.setText(iday+"/"+imonth+"/"+iyear);
+                        date.setText((iday+1)+"/"+imonth+"/"+iyear);
+                        day=imonth;
                     }
                 },year,month, day);
                 datePickerDialog.show();

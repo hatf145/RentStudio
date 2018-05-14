@@ -1,6 +1,8 @@
 package iteso.com.rentstudio;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -27,6 +29,7 @@ public class Activity_Start extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         icon = findViewById(R.id.activity_start_logo);
@@ -37,7 +40,9 @@ public class Activity_Start extends AppCompatActivity {
         if(mAuth.getCurrentUser() != null){
             getType();
         }
+
         TimerTask task = new TimerTask() {
+
             @Override
             public void run() {
                 Intent intent;

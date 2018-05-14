@@ -88,13 +88,13 @@ public class Activity_Register_User extends AppCompatActivity implements View.On
     public void updateUI(FirebaseUser user){
         if(user != null){
             if(sName != null && sLastname != null && sEmail != null && sPhone != null && sPassword != null && type != null){
-                User aux = new User(sEmail, sLastname, sName, sPassword, sPhone, (type ? 1 : 0));
+                User aux = new User(sEmail, sLastname, sName, sPassword, sPhone, (type ? 0 : 1));
                 databaseReference.child(mAuth.getCurrentUser().getUid()).child("info").setValue(aux);
             }
             Intent loginIntent = new Intent(Activity_Register_User.this,
                     Activity_Main_Screen.class);
             loginIntent.setFlags(loginIntent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            loginIntent.putExtra("userType", (type ? 1 : 0));
+            loginIntent.putExtra("userType", (type ? 0 : 1));
             startActivity(loginIntent);
         } else {
 

@@ -34,6 +34,13 @@
         android:layout_height="wrap_content"
         android:hint="@string/card_cvc_hint"/>
 
+    <Button
+        android:id="@+id/card_save_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save_card_button"
+        />
+
 
 
 </LinearLayout>

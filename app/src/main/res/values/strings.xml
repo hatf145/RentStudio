@@ -33,11 +33,12 @@
 
     <string name="recurring_payment">Registrar pago recurrente</string>
     <string name="payment_paypal">Registrar cuenta de Paypal</string>
-    <string name="payment_card">Registrar tarjeta de débito o crédito</string>
+    <string name="payment_card">Registrar tarjeta o cuenta de paypal</string>
     <string name="payment_history">Historial de pagos</string>
     <string name="lessor_bank_payment">Añadir cuenta bancaria</string>
     <string name="lessor_paypal_payment">Añadir cuenta de PayPal</string>
-
+    <string name="save_card_button">Guardar tarjeta</string>
+    <string name="recurring_button">Registrar pago recurrente</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

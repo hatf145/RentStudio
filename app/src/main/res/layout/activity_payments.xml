@@ -9,50 +9,43 @@
     android:layout_margin="@dimen/margin">
 
 
-
-    <TextView
-        android:id="@+id/payment_textview_0"
+    <LinearLayout
+        android:id="@+id/llHolder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/large_text_button"
-        android:gravity="center"
-        android:padding="@dimen/large_text_button"
-        android:clickable="true"
-        android:onClick="onClick"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/payment_textview_0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/large_text_button"
+            android:gravity="center"
+            android:padding="@dimen/large_text_button"
+            android:clickable="true"
 
-        />
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="#c0c0c0"/>
+            />
 
-    <TextView
-        android:id="@+id/payment_textview_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="@dimen/large_text_button"
-        android:padding="@dimen/large_text_button"
-        android:clickable="true"
-        android:onClick="onClick"
-        />
 
-    <View
-        android:id="@+id/view_line"
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="#c0c0c0"/>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#c0c0c0"/>
 
-    <TextView
-        android:id="@+id/payment_textview_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="@dimen/large_text_button"
-        android:padding="@dimen/large_text_button"
-        android:clickable="true"
-        android:onClick="onClick"
-        />
+        <TextView
+            android:id="@+id/payment_textview_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/large_text_button"
+            android:padding="@dimen/large_text_button"
+            android:clickable="true"
+            android:onClick="onClick"
+            />
 
+
+
+            />
+    </LinearLayout>
 </LinearLayout>

@@ -20,10 +20,5 @@ public class ActivityPaypalPayment extends AppCompatActivity {
         webView.setHorizontalScrollBarEnabled(false);
         webView.loadUrl("http://paypal.me/robto");
 
-
-
-
-
-
     }
 }

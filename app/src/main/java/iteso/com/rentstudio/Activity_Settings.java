@@ -17,7 +17,7 @@ public class Activity_Settings extends AppCompatActivity {
         setContentView(R.layout.activity__settings);
         notifications=findViewById(R.id.activity_settings_not);
         eula=findViewById(R.id.activity_settings_eula);
-        logout=findViewById(R.id.activity_settings_logout);
+       // logout=findViewById(R.id.activity_settings_logout);
         mPaymnet = findViewById(R.id.activity_settings_payment);
         mHelp = findViewById(R.id.activity_settings_help);
 
@@ -84,15 +84,13 @@ public class Activity_Settings extends AppCompatActivity {
                         Activity_Eula.class);
                 startActivity(useIntent);
                 break;
-            case R.id.activity_settings_logout:
-                Intent mainIntent = new Intent(Activity_Settings.this,
-                        Activity_LogIn.class);
-                mainIntent.addFlags(mainIntent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(mainIntent);
-                finish();
-                break;
+//            case R.id.activity_settings_logout:
+//                Intent mainIntent = new Intent(Activity_Settings.this,
+//                        Activity_LogIn.class);
+//                mainIntent.addFlags(mainIntent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(mainIntent);
+//                finish();
+//                break;
         }
-
-
     }
 }

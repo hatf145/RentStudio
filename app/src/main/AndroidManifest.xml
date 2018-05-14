@@ -40,7 +40,6 @@
         <activity android:name=".ActivityCardPayment" />
         <activity android:name=".Activity_help" />
         <activity android:name=".Activity_Settings" />
-        <activity android:name=".Activity_Notifications" />
         <activity android:name=".Activity_Edit_User">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

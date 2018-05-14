@@ -58,7 +58,7 @@ public class Activity_Register_User extends AppCompatActivity implements View.On
             sEmail = etEmail.getText().toString();
             sPhone = etPhone.getText().toString();
             sPassword = etPassword.getText().toString();
-            type = radioButtonA.isSelected();
+            type = radioButtonA.isChecked();
 
             createAccount(sEmail, sPassword);
         }
@@ -94,6 +94,7 @@ public class Activity_Register_User extends AppCompatActivity implements View.On
             Intent loginIntent = new Intent(Activity_Register_User.this,
                     Activity_Main_Screen.class);
             loginIntent.setFlags(loginIntent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            loginIntent.putExtra("userType", (type ? 1 : 0));
             startActivity(loginIntent);
         } else {
 

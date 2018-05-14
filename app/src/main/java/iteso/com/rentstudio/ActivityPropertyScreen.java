@@ -17,8 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
 import iteso.com.rentstudio.beans.Property;
 
 public class ActivityPropertyScreen extends AppCompatActivity {
@@ -36,7 +34,6 @@ public class ActivityPropertyScreen extends AppCompatActivity {
     private FirebaseAuth mAuth;
     String name1;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,15 +41,13 @@ public class ActivityPropertyScreen extends AppCompatActivity {
 
         address = findViewById(R.id.property_address);
         cost = findViewById(R.id.property_money);
-        availability =findViewById(R.id.property_availability);
+        availability = findViewById(R.id.property_availability);
         name = findViewById(R.id.property_house);
         payday = findViewById(R.id.property_payday);
         state = findViewById(R.id.property_state);
         town = findViewById(R.id.property_town);
-        editar=findViewById(R.id.activity_property_screen_button);
-        eliminar=findViewById(R.id.eliminarPropiedad);
-
-
+        editar = findViewById(R.id.activity_property_screen_button);
+        eliminar = findViewById(R.id.eliminarPropiedad);
 
         if(getIntent().getExtras()!=null){
             property = getIntent().getParcelableExtra("ITEM");

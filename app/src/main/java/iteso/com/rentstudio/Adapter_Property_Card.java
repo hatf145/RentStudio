@@ -19,12 +19,12 @@ import iteso.com.rentstudio.beans.Property;
 public class Adapter_Property_Card extends RecyclerView.Adapter<Adapter_Property_Card.ViewHolder>{
     ArrayList<Property> mDataSet;
     private Context context;
-    int fragment;
+    int fragment, userType;
 
-    public Adapter_Property_Card(int fragment,Context context, ArrayList<Property> myDataSet){
+    public Adapter_Property_Card(int fragment, Context context, ArrayList<Property> myDataSet){
         mDataSet = myDataSet;
         this.context = context;
-        this.fragment=fragment;
+        this.fragment = fragment;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class Adapter_Property_Card extends RecyclerView.Adapter<Adapter_Property
                 iit.setState(mDataSet.get(position).getState());
                 iit.setTown(mDataSet.get(position).getTown());
 
-                Intent intent=new Intent(context,ActivityPropertyScreen.class);
+                Intent intent = new Intent(context,ActivityPropertyScreen.class);
                 intent.putExtra("ITEM",iit);
                 intent.putExtra("FRAGMENT", fragment);
                 ((Activity_Main_Screen) context).startActivityForResult(intent,9999);

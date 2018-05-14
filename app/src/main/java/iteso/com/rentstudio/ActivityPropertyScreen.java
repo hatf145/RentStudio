@@ -127,10 +127,10 @@ public class ActivityPropertyScreen extends AppCompatActivity {
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for(DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()) {
+                        for(DataSnapshot snapshot : dataSnapshot.child(mAuth.getCurrentUser().getUid()).child("properties").getChildren()) {
                             Property aux = snapshot.getValue(Property.class);
                             if(aux.getName().equals(name1) ) {
-                                databaseReference.child("properties").child(snapshot.getKey()).removeValue();
+                                databaseReference.child(mAuth.getCurrentUser().getUid()).child("properties").child(snapshot.getKey()).removeValue();
                             }
                         }
                     }

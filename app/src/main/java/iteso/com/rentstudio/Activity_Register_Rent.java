@@ -169,10 +169,12 @@ public class Activity_Register_Rent extends AppCompatActivity {
                                 System.out.println("GOT HERE");
                                 databaseReference.child("properties").child(snapshot2.getKey()).child("lessor").setValue(lessor);
                                 databaseReference.child("properties").child(snapshot2.getKey()).child("payday").setValue(Integer.valueOf(day));
+                                Calendar g=Calendar.getInstance();
+                                g.set(year,month,day);
                                 Intent intent = new Intent(Intent.ACTION_INSERT)
                                         .setData(CalendarContract.Events.CONTENT_URI)
-                                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, calendar)
-                                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, calendar)
+                                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, g)
+                                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, g)
                                         .putExtra(CalendarContract.Events.TITLE, "Pago de renta")
                                         .putExtra(CalendarContract.Events.DESCRIPTION, "Pago de renta de la propiedad "+aux.getName())
                                         .putExtra(CalendarContract.Events.RRULE,"FREQ=MONTHLY;COUNT=12;");
@@ -180,6 +182,7 @@ public class Activity_Register_Rent extends AppCompatActivity {
                                 finish();
                             }
                         }
+
 
                     }
                 }

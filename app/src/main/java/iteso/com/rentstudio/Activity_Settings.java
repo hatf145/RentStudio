@@ -14,19 +14,13 @@ TextView notifications, eula, logout;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__settings);
-        notifications=findViewById(R.id.activity_settings_not);
+       // notifications=findViewById(R.id.activity_settings_not);
         eula=findViewById(R.id.activity_settings_eula);
         logout=findViewById(R.id.activity_settings_logout);
         mPaymnet = findViewById(R.id.activity_settings_payment);
         mHelp = findViewById(R.id.activity_settings_help);
 
-        notifications.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Activity_Notifications.class);
-                startActivity(intent);
-            }
-        });
+
 
         eula.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -56,11 +50,6 @@ TextView notifications, eula, logout;
 
     public void onClick(View v){
         switch (v.getId()){
-            case R.id.activity_settings_not:
-                Intent notIntent = new Intent(Activity_Settings.this,
-                        Activity_Notifications.class);
-                startActivity(notIntent);
-                break;
             case R.id.activity_settings_help:
                 Intent helpIntent = new Intent(Activity_Settings.this,
                         Activity_help.class);

@@ -7,17 +7,7 @@
     android:orientation="vertical"
     tools:context=".Activity_Settings">
 
-    <TextView
 
-        android:id="@+id/activity_settings_not"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:gravity="center"
-        android:padding="@dimen/large_text_button"
-        android:text="@string/settings_notification"
-
-        android:textSize="@dimen/large_text_button" />
 
     <View
         android:layout_width="fill_parent"

@@ -61,12 +61,12 @@ public class ActivityRentScreen extends AppCompatActivity {
         }
 
         mAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid());
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()){
+                for(DataSnapshot snapshot : dataSnapshot.child(mAuth.getCurrentUser().getUid()).child("properties").getChildren()){
                     Property aux = snapshot.getValue(Property.class);
                     if(aux.getAddress().equals(rent.getAddress())) {
                         flag = true;
@@ -87,7 +87,6 @@ public class ActivityRentScreen extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference = FirebaseDatabase.getInstance().getReference();
                 final String lessor = "lessor_1";
                 i=1;
                 databaseReference.addValueEventListener(new ValueEventListener() {
@@ -97,6 +96,12 @@ public class ActivityRentScreen extends AppCompatActivity {
                             Property aux = snapshot.getValue(Property.class);
                             if(aux.getAddress().equals(rent.getAddress()) && i == 1){
                                 databaseReference.child("properties").child(snapshot.getKey()).child("lessor").setValue(lessor);
+                            }
+                            for(DataSnapshot snapshotB : dataSnapshot.child(mAuth.getCurrentUser().getUid()).child("properties").getChildren()) {
+                                Property auxB = snapshotB.getValue(Property.class);
+                                if(auxB.getAddress().equals(rent.getAddress()) && i == 1){
+                                    databaseReference.child(mAuth.getCurrentUser().getUid()).child("properties").child(snapshotB.getKey()).child("lessor").setValue(lessor);
+                                }
                             }
                         }
 

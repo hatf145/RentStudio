@@ -34,7 +34,6 @@
         </activity>
         <activity android:name=".Activity_Register_Property" />
         <activity android:name=".Activity_Register_Rent" />
-        <activity android:name=".ActivityPayments2" />
         <activity android:name=".ActivityPaypalPayment" />
         <activity android:name=".ActivityCardPayment" />
         <activity android:name=".Activity_help" />

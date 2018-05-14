@@ -3,6 +3,7 @@ package iteso.com.rentstudio;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -111,6 +112,16 @@ public class ActivityPropertyScreen extends AppCompatActivity {
             }
         });
 
+
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:" + email.getText()));
+                startActivity(intent);
+            }
+        });
+
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +131,8 @@ public class ActivityPropertyScreen extends AppCompatActivity {
                 startActivityForResult(intent3,9999);
             }
         });
+
+
         
         eliminar.setOnClickListener(new View.OnClickListener() {
             @Override

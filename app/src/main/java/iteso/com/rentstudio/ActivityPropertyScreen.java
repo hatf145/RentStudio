@@ -30,6 +30,7 @@ public class ActivityPropertyScreen extends AppCompatActivity {
     public TextView payday;
     public TextView state;
     public TextView town;
+    public TextView email;
     Property property;
     Button editar, eliminar;
     int userType;
@@ -53,6 +54,7 @@ public class ActivityPropertyScreen extends AppCompatActivity {
         payday = findViewById(R.id.property_payday);
         state = findViewById(R.id.property_state);
         town = findViewById(R.id.property_town);
+        email = findViewById(R.id.property_email);
         editar = findViewById(R.id.activity_property_screen_button);
         eliminar = findViewById(R.id.eliminarPropiedad);
 
@@ -71,23 +73,31 @@ public class ActivityPropertyScreen extends AppCompatActivity {
                 name.setText(property.getName());
                 state.setText("Estado: "+property.getState());
                 town.setText("Ciudad: "+property.getTown());
-
             }
         }
 
         mAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid());
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()){
+                for(DataSnapshot snapshot : dataSnapshot.child(mAuth.getCurrentUser().getUid()).child("properties").getChildren()){
                     Property aux = snapshot.getValue(Property.class);
                     if(aux.getAddress().equals(property.getAddress())) {
                         flag = true;
+                        email.setVisibility(View.INVISIBLE);
                     }
                 }
                 if(!flag) {
+                    for(DataSnapshot snapshotB : dataSnapshot.getChildren()){
+                        for(DataSnapshot snapshotC : snapshotB.child("properties").getChildren()){
+                            Property auxB = snapshotC.getValue(Property.class);
+                            if(auxB.getAddress().equals(property.getAddress())){
+                                email.setText(dataSnapshot.child(snapshotB.getKey()).child("info").child("email").getValue(String.class));
+                            }
+                        }
+                    }
                     eliminar.setVisibility(View.INVISIBLE);
                     eliminar.setEnabled(false);
                     editar.setVisibility(View.INVISIBLE);

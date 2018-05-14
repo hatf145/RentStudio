@@ -99,7 +99,7 @@ public class ActivityPayments extends AppCompatActivity {
             case R.id.payment_textview_1:
                 if (userType == 0) {
                     Intent secondIntent = new Intent(ActivityPayments.this,
-                            ActivityPaypalPayment.class);
+                            ActivityRecurringPayment.class);
                     startActivity(secondIntent);
                 } else {
                     Intent secondIntent = new Intent(ActivityPayments.this,

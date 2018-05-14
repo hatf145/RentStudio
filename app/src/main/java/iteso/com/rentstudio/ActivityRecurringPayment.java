@@ -17,12 +17,13 @@ public class ActivityRecurringPayment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recurring_payment);
 
-        WebView webView = (WebView) findViewById(R.id.recurring_webview);
-
-        webView.setWebViewClient(new WebViewClient());
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.setVerticalScrollBarEnabled(false);
-        webView.setHorizontalScrollBarEnabled(false);
-        webView.loadUrl("http://paypal.com/checkoutnow");
+//
+//        WebView webView = (WebView) findViewById(R.id.recurring_webview);
+//
+//        webView.setWebViewClient(new WebViewClient());
+//        webView.getSettings().setJavaScriptEnabled(true);
+//        webView.setVerticalScrollBarEnabled(false);
+//        webView.setHorizontalScrollBarEnabled(false);
+//        webView.loadUrl("http://paypal.com/checkoutnow");
     }
 }

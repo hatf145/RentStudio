@@ -5,7 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="40dp"
+
     tools:context=".ActivityRecurringPayment">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="60dp"
+        android:text="Esta función solo está disponible en Estados Unidos"/>
+
+
+
+  <!--
     <WebView
         android:id="@+id/recurring_webview"
         android:layout_width="match_parent"
@@ -46,4 +62,6 @@
         android:layout_height="wrap_content"
         android:text="@string/recurring_button"
         />
+
+        -->
 </LinearLayout>

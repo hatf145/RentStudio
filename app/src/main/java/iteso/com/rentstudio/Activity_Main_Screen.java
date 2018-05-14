@@ -1,8 +1,13 @@
 package iteso.com.rentstudio;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,8 +22,18 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import iteso.com.rentstudio.beans.Lessor;
+import iteso.com.rentstudio.beans.Property;
+import iteso.com.rentstudio.beans.Rent;
 
 public class Activity_Main_Screen extends AppCompatActivity {
 
@@ -28,7 +43,10 @@ public class Activity_Main_Screen extends AppCompatActivity {
     public Fragment_Lessors fragment_lessors;
     public Fragment_Properties fragment_properties;
     TextView mEditProfile, mSettings, mAddProperty, mAddLessor, mAddRent, mLogout;
+    private DatabaseReference databaseReference;
     FirebaseAuth mAuth;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,9 +123,9 @@ public class Activity_Main_Screen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
-
-
 
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

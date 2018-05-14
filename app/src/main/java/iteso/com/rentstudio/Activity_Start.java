@@ -1,6 +1,8 @@
 package iteso.com.rentstudio;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -10,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import iteso.com.rentstudio.Manifest;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -21,8 +24,11 @@ public class Activity_Start extends AppCompatActivity {
     FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+
         icon=findViewById(R.id.activity_start_logo);
         rent=findViewById(R.id.activity_start_title);
         TimerTask task=new TimerTask() {

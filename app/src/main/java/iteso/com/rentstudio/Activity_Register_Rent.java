@@ -1,9 +1,18 @@
 package iteso.com.rentstudio;
 
 import android.app.DatePickerDialog;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.icu.util.TimeZone;
+import android.net.Uri;
+import android.provider.CalendarContract;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,6 +32,14 @@ import java.util.Calendar;
 
 import iteso.com.rentstudio.beans.Lessor;
 import iteso.com.rentstudio.beans.Property;
+import  android.Manifest.permission;
+
+import static android.Manifest.permission.READ_CALENDAR;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_CALENDAR;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+import android.Manifest;
 
 public class Activity_Register_Rent extends AppCompatActivity {
     Spinner lessor, property;
@@ -34,19 +51,21 @@ public class Activity_Register_Rent extends AppCompatActivity {
 
     DatabaseReference databaseReference;
     FirebaseAuth mAuth;
-
+    final int callbackId = 42;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__register_rent);
 
+        checkPermission(callbackId, permission.WRITE_CALENDAR, permission.READ_CALENDAR);
+
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid());
 
-        date=findViewById(R.id.activity_rent_date);
-        btnRent =findViewById(R.id.activity_brent_register);
-        lessor=findViewById(R.id.activity_rent_lessor);
-        property=findViewById(R.id.activity_rent_property);
+        date = findViewById(R.id.activity_rent_date);
+        btnRent = findViewById(R.id.activity_brent_register);
+        lessor = findViewById(R.id.activity_rent_lessor);
+        property = findViewById(R.id.activity_rent_property);
         lNames = new ArrayList<>();
         pNames = new ArrayList<>();
 
@@ -55,12 +74,12 @@ public class Activity_Register_Rent extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 lNames.clear();
                 pNames.clear();
-                for(DataSnapshot snapshot : dataSnapshot.child("lessors").getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.child("lessors").getChildren()) {
                     Lessor auxLessor = snapshot.getValue(Lessor.class);
                     lNames.add(auxLessor.getName());
                 }
 
-                for(DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()) {
                     Property auxProperty = snapshot.getValue(Property.class);
                     pNames.add(auxProperty.getName());
                 }
@@ -81,10 +100,10 @@ public class Activity_Register_Rent extends AppCompatActivity {
         });
 
         calendar = Calendar.getInstance();
-        day = calendar.get(Calendar.DAY_OF_MONTH);
-        month = calendar.get(Calendar.MONTH);
-        year = calendar.get(Calendar.YEAR);
-        date.setText(day+  "/" + (month+1) + "/" + year);
+        day = (int)calendar.get(Calendar.DAY_OF_MONTH);
+        month = (int)calendar.get(Calendar.MONTH);
+        year = (int)calendar.get(Calendar.YEAR);
+        date.setText(day + "/" + (month + 1) + "/" + year);
 
         date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,10 +111,12 @@ public class Activity_Register_Rent extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(Activity_Register_Rent.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int iyear, int iday, int imonth) {
-                        date.setText((iday+1)+"/"+imonth+"/"+iyear);
-                        day=imonth;
+                        date.setText((iday + 1) + "/" + imonth + "/" + iyear);
+                        day = imonth;
+                        month = iday+1;
+                        year = iyear;
                     }
-                },year,month, day);
+                }, year, month, day);
                 datePickerDialog.show();
             }
         });
@@ -107,23 +128,43 @@ public class Activity_Register_Rent extends AppCompatActivity {
                 String auxProperty = property.getSelectedItem().toString();
                 createRent(auxLessor, auxProperty, day);
                 Intent backHome = new Intent(Activity_Register_Rent.this, Activity_Main_Screen.class);
-                backHome.setFlags(backHome.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                backHome.setFlags(backHome.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(backHome);
             }
         });
     }
 
-    public void createRent(final String lessor, final String property, final int day){
+
+    private void checkPermission(int callbackId, String... permissionsId) {
+        boolean permissions = true;
+        for (String p : permissionsId) {
+            permissions = permissions && ContextCompat.checkSelfPermission(this, p) == PERMISSION_GRANTED;
+        }
+
+        if (!permissions)
+            ActivityCompat.requestPermissions(this, permissionsId, callbackId);
+    }
+
+    public void createRent(final String lessor, final String property, final int day) {
         i = 1;
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()) {
                     Property aux = snapshot.getValue(Property.class);
-                    if(aux.getName().equals(property) && i == 1){
+                    if (aux.getName().equals(property) && i == 1) {
                         System.out.println("GOT HERE");
                         databaseReference.child("properties").child(snapshot.getKey()).child("lessor").setValue(lessor);
                         databaseReference.child("properties").child(snapshot.getKey()).child("payday").setValue(Integer.valueOf(day));
+                        Intent intent = new Intent(Intent.ACTION_INSERT)
+                                .setData(CalendarContract.Events.CONTENT_URI)
+                                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, calendar)
+                                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, calendar)
+                                .putExtra(CalendarContract.Events.TITLE, "Pago de renta")
+                                .putExtra(CalendarContract.Events.DESCRIPTION, "Pago de renta de la propiedad "+aux.getName())
+                                .putExtra(CalendarContract.Events.RRULE,"FREQ=MONTHLY;COUNT=12;");
+                        startActivity(intent);
+                        finish();
                     }
                 }
                 i = 0;
@@ -134,6 +175,10 @@ public class Activity_Register_Rent extends AppCompatActivity {
 
             }
         });
+
+
+
+
     }
 
     @Override

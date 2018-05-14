@@ -87,8 +87,8 @@ public class ActivityRentScreen extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                final String lessor="lessor_1";
+                databaseReference = FirebaseDatabase.getInstance().getReference();
+                final String lessor = "lessor_1";
                 i=1;
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override

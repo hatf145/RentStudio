@@ -34,7 +34,7 @@ public class Fragment_Main extends android.support.v4.app.Fragment {
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
     private GregorianCalendar calendar = new GregorianCalendar();
-    private int userType;
+    private int userType, red;
     private String userName;
 
     public Fragment_Main(){
@@ -90,12 +90,16 @@ public class Fragment_Main extends android.support.v4.app.Fragment {
                     for (DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()) {
                         Property aux = snapshot.getValue(Property.class);
                         if (aux.getLessor().equals(userName)) {
+                            red = 0;
                             for (DataSnapshot snapshot2 : dataSnapshot.child(mAuth.getCurrentUser().getUid()).getChildren()) {
-                                User aux2 = snapshot2.getValue(User.class);
-                                if (aux2.getName().equals(aux.getLessor())) {
-                                    Rent auxRent = new Rent(aux.getAddress(), aux.getLessor(), myDate(aux.getPayday()), aux2.getPhone(), aux.getCost(), aux2.getEmail());
-                                    myDataSet.add(auxRent);
-                                    mAdapter.notifyDataSetChanged();
+                                if(red == 0) {
+                                    User aux2 = snapshot2.getValue(User.class);
+                                    if (aux2.getName().equals(aux.getLessor())) {
+                                        Rent auxRent = new Rent(aux.getAddress(), aux.getLessor(), myDate(aux.getPayday()), aux2.getPhone(), aux.getCost(), aux2.getEmail());
+                                        myDataSet.add(auxRent);
+                                        mAdapter.notifyDataSetChanged();
+                                        red = 1;
+                                    }
                                 }
                             }
                         }

@@ -33,6 +33,7 @@ public class ActivityPropertyScreen extends AppCompatActivity {
     Property property;
     Button editar, eliminar;
     int userType;
+    private boolean flag;
 
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
@@ -74,6 +75,32 @@ public class ActivityPropertyScreen extends AppCompatActivity {
             }
         }
 
+        mAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid());
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()){
+                    Property aux = snapshot.getValue(Property.class);
+                    if(aux.getAddress().equals(property.getAddress())) {
+                        flag = true;
+                    }
+                }
+                if(!flag) {
+                    eliminar.setVisibility(View.INVISIBLE);
+                    eliminar.setEnabled(false);
+                    editar.setVisibility(View.INVISIBLE);
+                    editar.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,9 +110,6 @@ public class ActivityPropertyScreen extends AppCompatActivity {
                 startActivityForResult(intent3,9999);
             }
         });
-
-        mAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid());
         
         eliminar.setOnClickListener(new View.OnClickListener() {
             @Override

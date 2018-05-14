@@ -37,6 +37,7 @@ public class Activity_Start extends AppCompatActivity {
         if(mAuth.getCurrentUser() != null){
             getType();
         }
+
         TimerTask task = new TimerTask() {
             @Override
             public void run() {

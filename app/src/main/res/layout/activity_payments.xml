@@ -5,20 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="iteso.com.rentstudio.Activity_Payment_Method"
+    tools:context="iteso.com.rentstudio.ActivityPayments"
     android:layout_margin="@dimen/margin">
 
 
-  
+
     <TextView
-        android:id="@+id/card_payment_textview"
+        android:id="@+id/payment_textview_0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/payment_card"
         android:textSize="@dimen/large_text_button"
         android:gravity="center"
         android:padding="@dimen/large_text_button"
         android:clickable="true"
+        android:onClick="onClick"
 
         />
 
@@ -26,18 +26,33 @@
         android:layout_width="fill_parent"
         android:layout_height="2dp"
         android:background="#c0c0c0"/>
-    
+
     <TextView
-        android:id="@+id/paypal_payment_textview"
+        android:id="@+id/payment_textview_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/payment_paypal"
         android:gravity="center"
         android:textSize="@dimen/large_text_button"
         android:padding="@dimen/large_text_button"
         android:clickable="true"
+        android:onClick="onClick"
+        />
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#c0c0c0"/>
+
+    <TextView
+        android:id="@+id/payment_textview_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/large_text_button"
+        android:padding="@dimen/large_text_button"
+        android:clickable="true"
+        android:onClick="onClick"
         />
 
 </LinearLayout>
-
-   

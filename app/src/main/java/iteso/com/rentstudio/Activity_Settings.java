@@ -3,13 +3,14 @@ package iteso.com.rentstudio;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 public class Activity_Settings extends AppCompatActivity {
-TextView notifications, eula, logout;
+    TextView notifications, eula, logout;
     TextView mPaymnet, mHelp;
-
+    private int userType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +20,11 @@ TextView notifications, eula, logout;
         logout=findViewById(R.id.activity_settings_logout);
         mPaymnet = findViewById(R.id.activity_settings_payment);
         mHelp = findViewById(R.id.activity_settings_help);
+
+
+        userType = getIntent().getIntExtra("userType", 0);
+        Log.e("OHSHIT", Integer.toString(userType));
+
 
         notifications.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -39,7 +45,8 @@ TextView notifications, eula, logout;
         mPaymnet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Activity_Payment_Method.class);
+                Intent intent = new Intent(getApplicationContext(), ActivityPayments.class);
+                intent.putExtra("userType", userType);
                 startActivity(intent);
             }
         });
@@ -68,7 +75,8 @@ TextView notifications, eula, logout;
                 break;
             case R.id.activity_settings_payment:
                 Intent paymentIntent = new Intent(Activity_Settings.this,
-                        Activity_Payment_Method.class);
+                        ActivityPayments.class);
+                paymentIntent.putExtra("userType", userType);
                 startActivity(paymentIntent);
                 break;
             case R.id.activity_settings_eula:

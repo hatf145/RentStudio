@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,10 +36,10 @@ public class Activity_Main_Screen extends AppCompatActivity {
         setContentView(R.layout.activity__main__screen);
 
         userType = getIntent().getIntExtra("userType", 0);
+        Log.e("OHSHIT", Integer.toString(userType));
         System.out.println("onGetExtraMAIN: " + userType);
 
         mAuth = FirebaseAuth.getInstance();
-
         mEditProfile = findViewById(R.id.drawer_edit_profile);
         mSettings = findViewById(R.id.drawer_settings);
         mAddProperty = findViewById(R.id.drawer_add_property);
@@ -80,6 +81,7 @@ public class Activity_Main_Screen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Activity_Settings.class);
+                intent.putExtra("userType", userType);
                 startActivity(intent);
             }
         });

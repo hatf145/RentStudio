@@ -5,12 +5,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".MyApplication"
         android:theme="@style/AppTheme">
         <activity android:name=".Activity_LogIn" />
         <activity android:name=".Activity_Register_User">
@@ -34,9 +34,9 @@
         </activity>
         <activity android:name=".Activity_Register_Property" />
         <activity android:name=".Activity_Register_Rent" />
-        <activity android:name=".Activity_Payment_Method" />
-        <activity android:name=".Activity_paypal" />
-        <activity android:name=".Activity_card_payment" />
+        <activity android:name=".ActivityPayments" />
+        <activity android:name=".ActivityPaypalPayment" />
+        <activity android:name=".ActivityCardPayment" />
         <activity android:name=".Activity_help" />
         <activity android:name=".Activity_Settings" />
         <activity android:name=".Activity_Notifications" />
@@ -56,6 +56,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activity_Main_Screen" />
         </activity>
+        <activity android:name=".ActivityPaymentHistory" />
+        <activity android:name=".ActivityRecurringPayment"></activity>
     </application>
 
 </manifest>

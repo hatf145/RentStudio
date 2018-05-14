@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class Activity_paypal extends AppCompatActivity {
+public class ActivityPaypalPayment extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_paypal);
+        setContentView(R.layout.activity_paypal_payment);
 
         WebView webView = (WebView) findViewById(R.id.paypal_webview);
 

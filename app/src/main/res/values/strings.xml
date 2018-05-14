@@ -22,8 +22,6 @@
     <string name="available">Disponible</string>
     <string name="navailable">No disponible</string>
     <string name="register_rent">Registrar Renta</string>
-    <string name="payment_paypal">Paypal</string>
-    <string name="payment_card">Tarjeta de débito o crédito</string>
     <string name="card_number_title">Numero de tarjeta</string>
     <string name="card_expiration_title">Fecha de vencimiento</string>
     <string name="card_cvc_title">CVC</string>
@@ -31,6 +29,15 @@
     <string name="card_expiration_hint">01/25</string>
     <string name="card_cvc_hint">123</string>
     <string name="log_out">Log Out</string>
+
+
+    <string name="recurring_payment">Registrar pago recurrente</string>
+    <string name="payment_paypal">Registrar cuenta de Paypal</string>
+    <string name="payment_card">Registrar tarjeta de débito o crédito</string>
+    <string name="payment_history">Historial de pagos</string>
+    <string name="lessor_bank_payment">Añadir cuenta bancaria</string>
+    <string name="lessor_paypal_payment">Añadir cuenta de PayPal</string>
+
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -84,8 +91,6 @@
     <string name="editLessor">Editar Arrendador</string>
     <string name="deleteLessor">Eliminar Arrendador</string>
     <string name="deleteProperty">Eliminar Propiedad</string>
-
-
 
 
 </resources>

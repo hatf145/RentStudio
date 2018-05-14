@@ -17,6 +17,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import iteso.com.rentstudio.beans.Property;
 
 public class ActivityPropertyScreen extends AppCompatActivity {
@@ -29,6 +32,7 @@ public class ActivityPropertyScreen extends AppCompatActivity {
     public TextView town;
     Property property;
     Button editar, eliminar;
+    int userType;
 
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
@@ -38,6 +42,8 @@ public class ActivityPropertyScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property_screen);
+
+        userType = getIntent().getIntExtra("userType", 0);
 
         address = findViewById(R.id.property_address);
         cost = findViewById(R.id.property_money);
@@ -67,11 +73,13 @@ public class ActivityPropertyScreen extends AppCompatActivity {
 
             }
         }
+
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent3=new Intent(ActivityPropertyScreen.this,ActivityEditProperty.class);
                 intent3.putExtra("ITEM",property);
+                intent3.putExtra("userType", userType);
                 startActivityForResult(intent3,9999);
             }
         });
@@ -87,12 +95,10 @@ public class ActivityPropertyScreen extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for(DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()) {
                             Property aux = snapshot.getValue(Property.class);
-                            if(aux.getName().equals(name1) ){
+                            if(aux.getName().equals(name1) ) {
                                 databaseReference.child("properties").child(snapshot.getKey()).removeValue();
-
                             }
                         }
-
                     }
 
                     @Override
@@ -101,11 +107,38 @@ public class ActivityPropertyScreen extends AppCompatActivity {
                     }
                 });
 
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        if(userType == 0){
+                            databaseReference = FirebaseDatabase.getInstance().getReference().child("properties");
+                            databaseReference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                        Property aux = snapshot.getValue(Property.class);
+                                        if(aux.getName().equals(name1) ) {
+                                            databaseReference.child(snapshot.getKey()).removeValue();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                    }
+                };
+                Timer timer = new Timer();
+                timer.schedule(task,1000);
+
                 Intent backHome = new Intent(ActivityPropertyScreen.this, Activity_Main_Screen.class);
                 backHome.setFlags(backHome.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                backHome.putExtra("userType", userType);
                 startActivity(backHome);
                 finish();
-
             }
         });
 

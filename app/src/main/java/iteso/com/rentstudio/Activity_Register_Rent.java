@@ -42,7 +42,7 @@ public class Activity_Register_Rent extends AppCompatActivity {
         userType = getIntent().getIntExtra("userType", 0);
 
         mAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid());
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         date=findViewById(R.id.activity_rent_date);
         btnRent =findViewById(R.id.activity_brent_register);
@@ -56,12 +56,12 @@ public class Activity_Register_Rent extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 lNames.clear();
                 pNames.clear();
-                for(DataSnapshot snapshot : dataSnapshot.child("lessors").getChildren()){
+                for(DataSnapshot snapshot : dataSnapshot.child(mAuth.getCurrentUser().getUid()).child("lessors").getChildren()){
                     Lessor auxLessor = snapshot.getValue(Lessor.class);
                     lNames.add(auxLessor.getName());
                 }
 
-                for(DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()){
+                for(DataSnapshot snapshot : dataSnapshot.child(mAuth.getCurrentUser().getUid()).child("properties").getChildren()){
                     Property auxProperty = snapshot.getValue(Property.class);
                     pNames.add(auxProperty.getName());
                 }
@@ -118,12 +118,22 @@ public class Activity_Register_Rent extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()){
+                for(DataSnapshot snapshot : dataSnapshot.child(mAuth.getCurrentUser().getUid()).child("properties").getChildren()){
                     Property aux = snapshot.getValue(Property.class);
                     if(aux.getName().equals(property) && i == 1){
                         System.out.println("GOT HERE");
-                        databaseReference.child("properties").child(snapshot.getKey()).child("lessor").setValue(lessor);
-                        databaseReference.child("properties").child(snapshot.getKey()).child("payday").setValue(Integer.valueOf(day));
+                        databaseReference.child(mAuth.getCurrentUser().getUid()).child("properties").child(snapshot.getKey()).child("lessor").setValue(lessor);
+                        databaseReference.child(mAuth.getCurrentUser().getUid()).child("properties").child(snapshot.getKey()).child("payday").setValue(Integer.valueOf(day));
+                    }
+                    if(userType == 0){
+                        for(DataSnapshot snapshot2 : dataSnapshot.child("properties").getChildren()){
+                            Property auxB = snapshot2.getValue(Property.class);
+                            if(auxB.getName().equals(property) && i == 1){
+                                System.out.println("GOT HERE");
+                                databaseReference.child("properties").child(snapshot2.getKey()).child("lessor").setValue(lessor);
+                                databaseReference.child("properties").child(snapshot2.getKey()).child("payday").setValue(Integer.valueOf(day));
+                            }
+                        }
                     }
                 }
                 i = 0;

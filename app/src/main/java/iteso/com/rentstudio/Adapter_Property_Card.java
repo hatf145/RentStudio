@@ -21,10 +21,11 @@ public class Adapter_Property_Card extends RecyclerView.Adapter<Adapter_Property
     private Context context;
     int fragment, userType;
 
-    public Adapter_Property_Card(int fragment, Context context, ArrayList<Property> myDataSet){
+    public Adapter_Property_Card(int fragment, Context context, ArrayList<Property> myDataSet, int userType){
         mDataSet = myDataSet;
         this.context = context;
         this.fragment = fragment;
+        this.userType = userType;
     }
 
     @Override
@@ -68,6 +69,7 @@ public class Adapter_Property_Card extends RecyclerView.Adapter<Adapter_Property
                 Intent intent = new Intent(context,ActivityPropertyScreen.class);
                 intent.putExtra("ITEM",iit);
                 intent.putExtra("FRAGMENT", fragment);
+                intent.putExtra("userType", userType);
                 ((Activity_Main_Screen) context).startActivityForResult(intent,9999);
 
             }

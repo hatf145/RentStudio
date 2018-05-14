@@ -15,6 +15,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import iteso.com.rentstudio.beans.Property;
 import iteso.com.rentstudio.beans.Rent;
 
@@ -30,6 +33,8 @@ public class ActivityRentScreen extends AppCompatActivity {
     Button delete;
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
+    private boolean flag = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +45,8 @@ public class ActivityRentScreen extends AppCompatActivity {
         phone=findViewById(R.id.rent_screen_phone);
         cost=findViewById(R.id.rent_screen_cost);
         mail=findViewById(R.id.rent_screen_mail);
-        delete=findViewById(R.id.delete_button);
+        delete = findViewById(R.id.delete_button);
+
         if(getIntent().getExtras()!=null){
             rent = getIntent().getParcelableExtra("ITEM");
             if (rent != null) {
@@ -51,15 +57,38 @@ public class ActivityRentScreen extends AppCompatActivity {
                 cost.setText("Costo: "+Integer.toString(rent.getCost()));
                 mail.setText("Correo: "+rent.getMail());
 
-            }}
+            }
+        }
+
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid());
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()){
+                    Property aux = snapshot.getValue(Property.class);
+                    if(aux.getAddress().equals(rent.getAddress())) {
+                        flag = true;
+                    }
+                }
+                if(!flag) {
+                    delete.setVisibility(View.INVISIBLE);
+                    delete.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                final String lessor="lessor_1";
+                databaseReference = FirebaseDatabase.getInstance().getReference();
+                final String lessor = "lessor_1";
                 i=1;
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -68,8 +97,6 @@ public class ActivityRentScreen extends AppCompatActivity {
                             Property aux = snapshot.getValue(Property.class);
                             if(aux.getAddress().equals(rent.getAddress()) && i == 1){
                                 databaseReference.child("properties").child(snapshot.getKey()).child("lessor").setValue(lessor);
-                                // databaseReference.child("properties").child(snapshot.getKey()).child("payday").setValue(Integer.toString(payday));
-
                             }
                         }
 

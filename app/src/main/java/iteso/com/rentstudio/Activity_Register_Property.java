@@ -17,17 +17,21 @@ import com.google.firebase.database.ValueEventListener;
 import iteso.com.rentstudio.beans.Property;
 
 public class Activity_Register_Property extends AppCompatActivity {
-    EditText etName, etDirection, etTown, etState, etRent;
-    String sName, sDirection, sTown, sState, sRent;
-    int iRent;
-    Button btnProperty;
-    DatabaseReference databaseReference;
-    FirebaseAuth mAuth;
+    private EditText etName, etDirection, etTown, etState, etRent;
+    private String sName, sDirection, sTown, sState, sRent;
+    private int iRent;
+    private Button btnProperty;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
+    private int userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__register__property);
+
+        userType = getIntent().getIntExtra("userType", 0);
+
         etName =findViewById(R.id.activity_registerProperty_name);
         etDirection =findViewById(R.id.activity_registerProperty_direction);
         etTown =findViewById(R.id.activity_registerProperty_town);
@@ -49,9 +53,17 @@ public class Activity_Register_Property extends AppCompatActivity {
 
                 if(sName != null && sDirection != null && sTown != null && sState != null && sRent != null) {
                     iRent = Integer.parseInt(sRent);
-                    Property aux = new Property(sDirection, iRent, "lessor_1", sName, 0, sState, sTown);
-                    String key = databaseReference.push().getKey();
+                    Property aux, aux2;
+                    String key;
+                    aux = new Property(sDirection, iRent, "lessor_1", sName, 0, sState, sTown);
+                    key = databaseReference.push().getKey();
                     databaseReference.child(mAuth.getCurrentUser().getUid()).child("properties").child(key).setValue(aux);
+                    if(userType == 0){
+                        databaseReference = FirebaseDatabase.getInstance().getReference().child("properties");
+                        aux2 = new Property(sDirection, iRent, "lessor_1", sName, 0, sState, sTown, mAuth.getCurrentUser().getUid());
+                        key = databaseReference.push().getKey();
+                        databaseReference.child(key).setValue(aux2);
+                    }
 
                     Intent loginIntent = new Intent(Activity_Register_Property.this,
                             Activity_Main_Screen.class);

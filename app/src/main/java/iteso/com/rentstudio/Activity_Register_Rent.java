@@ -42,25 +42,27 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import android.Manifest;
 
 public class Activity_Register_Rent extends AppCompatActivity {
-    Spinner lessor, property;
-    Calendar calendar;
-    TextView date;
-    int year, month, day, i;
-    Button btnRent;
-    ArrayList<String> lNames, pNames;
-
-    DatabaseReference databaseReference;
-    FirebaseAuth mAuth;
+    private Spinner lessor, property;
+    private Calendar calendar;
+    private TextView date;
+    private int year, month, day, i, userType;
+    private Button btnRent;
+    private ArrayList<String> lNames, pNames;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
     final int callbackId = 42;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__register_rent);
 
+
+        userType = getIntent().getIntExtra("userType", 0);
         checkPermission(callbackId, permission.WRITE_CALENDAR, permission.READ_CALENDAR);
 
         mAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid());
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         date = findViewById(R.id.activity_rent_date);
         btnRent = findViewById(R.id.activity_brent_register);
@@ -74,12 +76,14 @@ public class Activity_Register_Rent extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 lNames.clear();
                 pNames.clear();
-                for (DataSnapshot snapshot : dataSnapshot.child("lessors").getChildren()) {
+                for(DataSnapshot snapshot : dataSnapshot.child(mAuth.getCurrentUser().getUid()).child("lessors").getChildren()){
+
                     Lessor auxLessor = snapshot.getValue(Lessor.class);
                     lNames.add(auxLessor.getName());
                 }
 
-                for (DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()) {
+                for(DataSnapshot snapshot : dataSnapshot.child(mAuth.getCurrentUser().getUid()).child("properties").getChildren()){
+
                     Property auxProperty = snapshot.getValue(Property.class);
                     pNames.add(auxProperty.getName());
                 }
@@ -150,23 +154,36 @@ public class Activity_Register_Rent extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.child("properties").getChildren()) {
+                for(DataSnapshot snapshot : dataSnapshot.child(mAuth.getCurrentUser().getUid()).child("properties").getChildren()){
+
                     Property aux = snapshot.getValue(Property.class);
                     if (aux.getName().equals(property) && i == 1) {
                         System.out.println("GOT HERE");
-                        databaseReference.child("properties").child(snapshot.getKey()).child("lessor").setValue(lessor);
-                        databaseReference.child("properties").child(snapshot.getKey()).child("payday").setValue(Integer.valueOf(day));
-                        Calendar g=Calendar.getInstance();
-                        g.set(year,month,day);
-                        Intent intent = new Intent(Intent.ACTION_INSERT)
-                                .setData(CalendarContract.Events.CONTENT_URI)
-                                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, g)
-                                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, g)
-                                .putExtra(CalendarContract.Events.TITLE, "Pago de renta")
-                                .putExtra(CalendarContract.Events.DESCRIPTION, "Pago de renta de la propiedad "+aux.getName())
-                                .putExtra(CalendarContract.Events.RRULE,"FREQ=MONTHLY;COUNT=12;");
-                        startActivity(intent);
-                        finish();
+                        databaseReference.child(mAuth.getCurrentUser().getUid()).child("properties").child(snapshot.getKey()).child("lessor").setValue(lessor);
+                        databaseReference.child(mAuth.getCurrentUser().getUid()).child("properties").child(snapshot.getKey()).child("payday").setValue(Integer.valueOf(day));
+                    }
+                    if(userType == 0){
+                        for(DataSnapshot snapshot2 : dataSnapshot.child("properties").getChildren()){
+                            Property auxB = snapshot2.getValue(Property.class);
+                            if(auxB.getName().equals(property) && i == 1){
+                                System.out.println("GOT HERE");
+                                databaseReference.child("properties").child(snapshot2.getKey()).child("lessor").setValue(lessor);
+                                databaseReference.child("properties").child(snapshot2.getKey()).child("payday").setValue(Integer.valueOf(day));
+                                Calendar g=Calendar.getInstance();
+                                g.set(year,month,day);
+                                Intent intent = new Intent(Intent.ACTION_INSERT)
+                                        .setData(CalendarContract.Events.CONTENT_URI)
+                                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, g)
+                                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, g)
+                                        .putExtra(CalendarContract.Events.TITLE, "Pago de renta")
+                                        .putExtra(CalendarContract.Events.DESCRIPTION, "Pago de renta de la propiedad "+aux.getName())
+                                        .putExtra(CalendarContract.Events.RRULE,"FREQ=MONTHLY;COUNT=12;");
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+
+
                     }
                 }
                 i = 0;
